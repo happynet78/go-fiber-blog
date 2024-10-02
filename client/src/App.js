@@ -6,6 +6,8 @@ import Blog from "./page/blog";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Add from "./page/Add";
+import Edit from "./page/Edit";
+import Delete from "./page/Delete";
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/add" element={<Add />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/delete/:id" element={<Delete />} />
             <Route path="/blog/:id" element={<Blog />} />
         </Routes>
         <Footer />
