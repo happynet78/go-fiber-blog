@@ -3,7 +3,6 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/happynet78/go-fiber-blog/controller"
-	"github.com/happynet78/go-fiber-blog/middleware"
 )
 
 // Setup Router List
@@ -17,7 +16,7 @@ func SetupRoutes(app *fiber.App) {
 	// update => put
 	// delete => delete
 
-	app.Use(middleware.IsAuthenticate)
+	// app.Use(middleware.IsAuthenticate)
 	app.Get("/", controller.BlogList)
 	app.Get("/blog/", controller.BlogList)
 	app.Get("/blog/:id", controller.BlogDetail)

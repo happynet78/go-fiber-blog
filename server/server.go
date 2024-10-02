@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"strings"
 )
 
 func init() {
@@ -39,6 +40,13 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowMethods: strings.Join([]string{
+			fiber.MethodGet,
+			fiber.MethodPost,
+			fiber.MethodDelete,
+			fiber.MethodPatch,
+		}, ","),
+		// AllowCredentials: true,
 	}))
 
 	// app.Get("/", func(c *fiber.Ctx) error {

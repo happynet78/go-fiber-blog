@@ -8,6 +8,7 @@ import Footer from "./components/layout/Footer";
 import Add from "./page/Add";
 import Edit from "./page/Edit";
 import Delete from "./page/Delete";
+import Login from "./Login";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/delete/:id" element={<Delete />} />
             <Route path="/blog/:id" element={<Blog />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
         </>

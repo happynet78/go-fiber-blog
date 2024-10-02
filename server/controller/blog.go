@@ -15,7 +15,7 @@ func BlogList(c *fiber.Ctx) error {
 		"msg":        "Blog list",
 	}
 
-	time.Sleep(time.Millisecond * 5000)
+	time.Sleep(time.Millisecond * 1500)
 
 	db := database.DBConn
 
@@ -71,6 +71,24 @@ func BlogCreate(c *fiber.Ctx) error {
 		log.Println("Error in parsing request")
 		context["statusText"] = ""
 		context["msg"] = "Something went wrong."
+	}
+
+	// File upload
+	file, err := c.FormFile("file")
+
+	if err != nil {
+		log.Println("Error in file upload.", err)
+	}
+
+	if file.Size > 0 {
+		filename := "./static/uploads/" + file.Filename
+
+		if err := c.SaveFile(file, filename); err != nil {
+			log.Println("Error in file uploading...", err)
+		}
+
+		// Set image path to the struct
+		record.Image = filename
 	}
 
 	result := database.DBConn.Create(&record)
