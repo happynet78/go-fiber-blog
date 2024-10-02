@@ -5,6 +5,7 @@ import (
 	"github.com/happynet78/go-fiber-blog/database"
 	"github.com/happynet78/go-fiber-blog/model"
 	"log"
+	"os"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func BlogList(c *fiber.Ctx) error {
 
 	var records []model.Blog
 
-	db.Find(&records)
+	db.Find(&records).Order("id desc")
 
 	context["blog_records"] = records
 
@@ -172,6 +173,14 @@ func BlogDelete(c *fiber.Ctx) error {
 
 		c.Status(400)
 		return c.JSON(context)
+	}
+
+	// Remove image
+	filename := record.Image
+
+	err := os.Remove(filename)
+	if err != nil {
+		log.Println("Error in deleting file.", err)
 	}
 
 	result := database.DBConn.Delete(&record)

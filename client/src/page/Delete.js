@@ -9,7 +9,7 @@ const Delete = () => {
     
     const handleDelete = async () => {
         try {
-            const apiUrl = process.env.REACT_APP_API_ROOT + params.id;
+            const apiUrl = process.env.REACT_APP_API_ROOT +"/"+ params.id;
             
             const response = await axios.delete(apiUrl);
             

@@ -60,20 +60,23 @@ const Home = () => {
 				
 				{apiData && (
 					apiData.map((record, index) => (
-						<Col key={index} xs="4" className="py-5 box">
-							<div className="title">
-								<Link to={`blog/${record.id}`}> {record.title}</Link>
-							</div>
-							<div>
-								<Link to={`edit/${record.id}`}>
-									<i className="fa fa-solid fa-pencil fa-2x" />
-								</Link>&nbsp;
-								<Link to={`delete/${record.id}`}>
-									<i className="fa fa-solid fa-trash fa-2x" />
-								</Link>
-							</div>
-							<div>{record.desc}</div>
-						</Col>
+							<Col key={index} xs="4" className="py-5 box">
+								<div>
+									<img src={`${process.env.REACT_APP_API_ROOT}/${record.image}`}/>
+								</div>
+								<div className="title">
+									<Link to={`blog/${record.id}`}> {record.title}</Link>
+								</div>
+								<div>
+									<Link to={`edit/${record.id}`}>
+										<i className="fa fa-solid fa-pencil fa-2x"/>
+									</Link>&nbsp;
+									<Link to={`delete/${record.id}`}>
+										<i className="fa fa-solid fa-trash fa-2x"/>
+									</Link>
+								</div>
+								<div>{record.desc}</div>
+							</Col>
 					))
 				)}
 			</Row>

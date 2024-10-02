@@ -12,7 +12,7 @@ const Blog = () => {
 		const fetchData = async () => {
 			
 			try {
-				const apiUrl = process.env.REACT_APP_API_ROOT + params.id;
+				const apiUrl = process.env.REACT_APP_API_ROOT +"/"+ params.id;
 				const response = await axios.get(apiUrl)
 				
 				if (response.status === 200) {
@@ -36,6 +36,9 @@ const Blog = () => {
 			<Row>
 				<Col xs="12">
 					<h1>{apiData.title}</h1>
+				</Col>
+				<Col xs="6">
+					<img src={`${process.env.REACT_APP_API_ROOT}/${apiData.image}`} />
 				</Col>
 				<Col xs="12">
 					<p>{apiData.desc}</p>

@@ -35,6 +35,8 @@ func main() {
 		BodyLimit: 100 * 1024 * 1024,
 	})
 
+	app.Static("/static", "./static")
+
 	app.Use(logger.New())
 
 	app.Use(cors.New(cors.Config{

@@ -23,4 +23,5 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/blog/", controller.BlogCreate)
 	app.Put("/blog/:id", controller.BlogUpdate)
 	app.Delete("/blog/:id", controller.BlogDelete)
+	app.Static("/blog/static/uploads", "./static/uploads")
 }
