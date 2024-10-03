@@ -17,7 +17,7 @@ const Edit = () => {
         const fetchData = async () => {
             
             try {
-                const apiUrl = process.env.REACT_APP_API_ROOT + params.id;
+                const apiUrl = process.env.REACT_APP_API_ROOT  +"/"+ params.id;
                 const response = await axios.get(apiUrl)
                 
                 if (response.status === 200) {
@@ -50,7 +50,8 @@ const Edit = () => {
         data.image = null;
         
         try {
-            const apiUrl = process.env.REACT_APP_API_ROOT + params.id;
+            const apiUrl = process.env.REACT_APP_API_ROOT +"/"+ params.id;
+            console.log("apiUrl: " + apiUrl);
             const response = await axios.post(apiUrl, data, {
                 headers: {
                     "Content-Type": "multipart/form-data",

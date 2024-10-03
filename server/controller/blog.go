@@ -1,10 +1,13 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/happynet78/go-fiber-blog/database"
 	"github.com/happynet78/go-fiber-blog/model"
+	"github.com/happynet78/go-fiber-blog/util"
 	"log"
+	"math/rand"
 	"os"
 	"time"
 )
@@ -66,33 +69,44 @@ func BlogCreate(c *fiber.Ctx) error {
 		"msg":        "Blog list",
 	}
 
+	cookie := c.Cookies("jwt")
+	id, _ := util.Parsejwt(cookie)
+	fmt.Println("uid: " + id)
+	// var blog model.Blog
+
+	// blogRecord := new(model.Blog)
+
+	// record := database.DBConn.Model(&blog).Where("user_id = ?", uid).Preload("User").Find(&blog)
 	record := new(model.Blog)
 
-	if err := c.BodyParser(&record); err != nil {
+	if err := c.BodyParser(record); err != nil {
 		log.Println("Error in parsing request")
 		context["statusText"] = ""
 		context["msg"] = "Something went wrong."
 	}
 
 	// File upload
-	file, err := c.FormFile("file")
-
+	form, err := c.MultipartForm()
 	if err != nil {
-		log.Println("Error in file upload.", err)
+		return err
 	}
+	files := form.File["image"]
+	fileName := ""
 
-	if file.Size > 0 {
-		filename := "./static/uploads/" + file.Filename
+	for _, file := range files {
 
-		if err := c.SaveFile(file, filename); err != nil {
-			log.Println("Error in file uploading...", err)
+		fileName = randLetter(5) + "-" + file.Filename
+		if err := c.SaveFile(file, "./static/uploads/"+fileName); err != nil {
+			return nil
 		}
 
-		// Set image path to the struct
-		record.Image = filename
+		// record.image = "../static/uploads/" + fileName
 	}
 
-	result := database.DBConn.Create(&record)
+	// record.userid = id
+	log.Println(record)
+
+	result := database.DBConn.Create(record)
 
 	if result.Error != nil {
 		log.Println("Error in saving data")
@@ -196,4 +210,14 @@ func BlogDelete(c *fiber.Ctx) error {
 	context["msg"] = "Record deleted successfully."
 	c.Status(200)
 	return c.JSON(context)
+}
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyz")
+
+func randLetter(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
 }

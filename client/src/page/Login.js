@@ -23,10 +23,11 @@ const Login = () => {
         
         try {
             const apiUrl = process.env.REACT_APP_AUTH_ROOT+"/login";
-            console.log("apiUrl: " + apiUrl);
+            
             const response = await axios.post(apiUrl, data);
             console.log(response);
             if (response.status === 200) {
+                
                 const data = await response.data;
                 console.log(data)
 
